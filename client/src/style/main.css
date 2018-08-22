@@ -1,0 +1,40 @@
+.nav{
+    background: rgb(15, 59, 85);
+    color: white;
+    padding: 5px;
+    margin-bottom: 1rem;
+}
+
+.nav ul{
+    padding:0;
+    margin:0;
+}
+
+.nav ul li{
+    list-style-type: none;
+}
+
+#taskForm{
+    
+}
+
+.successful{
+    background-color: green;
+}
+
+.failed{
+    background-color: red;
+}
+
+.displayErrors input:invalid {
+    border-color: red;
+  }
+
+  a {
+    color: rgba(23, 123, 218, 0.767);
+    text-decoration: none;
+  }
+
+  .nav a:visited{
+      color: white;
+  }
