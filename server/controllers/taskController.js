@@ -43,3 +43,13 @@ exports.task_get_all = [
             });
     },
 ];
+
+exports.task_update_post = [
+    (req, res, next) => {
+        let id = req.params.id;
+
+        // check if it exist
+            
+        // update it if it does
+    }
+];

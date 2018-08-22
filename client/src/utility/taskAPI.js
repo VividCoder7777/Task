@@ -32,12 +32,26 @@ class TaskAPI{
         this.API.get('/task/' + id)
             .then(result =>{
                 if (result){
-                    callback(result.data);
+                    if (callback != undefined){
+                       callback(result.data); 
+                    }
                 } else {
-                    callback(false);
+                    if (callback != undefined){
+                        callback(false); 
+                     }
                 }
             })
             .catch(error =>{
+                callback(false);
+            });
+    }
+
+    update_task_post(id, callback){
+        this.API.post('/task/' + id + '/edit')
+            .then(result => {
+                callback(result);
+            })
+            .catch(error => {
                 callback(false);
             });
     }
