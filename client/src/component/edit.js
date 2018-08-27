@@ -11,6 +11,7 @@ export default class EditTask extends React.Component{
 
         this.getTaskCallback = this.getTaskCallback.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateTaskCallback = this.updateTaskCallback.bind(this);
         this.state = {
             title: '',
             description: '',
@@ -44,6 +45,10 @@ export default class EditTask extends React.Component{
         }
     }
 
+    updateTaskCallback(result){
+        window.location.href = '/';
+    }
+
     handleSubmit(event){
 
         event.preventDefault();
@@ -51,17 +56,17 @@ export default class EditTask extends React.Component{
 
         // successful
         if (event.target.checkValidity()){
-        this.setState({ displayErrors: false });
-        let body = {
-            title: elements['title'].value,
-            description: elements['description'].value,
-            toDoDate: elements['toDoDate'].value
-        }
+            this.setState({ displayErrors: false });
+            let body = {
+                title: elements['title'].value,
+                description: elements['description'].value,
+                toDoDate: elements['toDoDate'].value
+            }
 
-        taskAPI.update_task_post(body);
+            taskAPI.update_task_post(this.state.id, body, this.updateTaskCallback);
         } else {
         // failed
-        this.setState({ displayErrors: true });
+            this.setState({ displayErrors: true });
         }
     }
 
@@ -75,32 +80,32 @@ export default class EditTask extends React.Component{
                 <div>
                     <div>
                         <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
-                        <h2>Edit Task: {this.state.title}</h2>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}>
-                                </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor='title'>Task Title:</label></td>
-                                <td><input id='title' name='title' type='text' defaultValue={this.state.title} required/></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor='description'>Description:</label></td>
-                                <td><input id='description' name='description' type='text' defaultValue={this.state.description} required/></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
-                                <td><input id='toDoDate' name='toDoDate' type='date' defaultValue={this.state.toDoDate} required/></td>
-                            </tr>
-                            <tr>
-                                <td><button>Update</button></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                            <h2>Edit Task: {this.state.title}</h2>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                    <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}>
+                                    </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor='title'>Task Title:</label></td>
+                                    <td><input id='title' name='title' type='text' defaultValue={this.state.title} required/></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor='description'>Description:</label></td>
+                                    <td><input id='description' name='description' type='text' defaultValue={this.state.description} required/></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
+                                    <td><input id='toDoDate' name='toDoDate' type='date' defaultValue={this.state.toDoDate} required/></td>
+                                </tr>
+                                <tr>
+                                    <td><button>Update</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </form>
                     </div>
                 </div>

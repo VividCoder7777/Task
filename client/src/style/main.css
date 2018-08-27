@@ -38,3 +38,71 @@
   .nav a:visited{
       color: white;
   }
+
+  .popup h2{
+      margin: 0;
+      margin-bottom: 15px;
+  }
+
+  .popup{
+      text-align: center;
+  }
+
+  .popup button{
+      font-size: 1.5rem;
+      margin-left: 20px;
+  }
+
+  .delete button{
+    color: rgba(23, 123, 218, 0.767) !important;
+    font-size: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .completed button{
+    color: rgba(23, 123, 218, 0.767) !important;
+    font-size: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  #taskTable{
+    table-layout:fixed;
+    text-align: center;
+
+  }
+
+  #taskTable th{
+    background-color: rgba(23, 123, 218, 0.767);
+  }
+
+  #taskTable thead th, #taskTable tbody td, #taskTable td{
+      min-width: 100px;
+      border: 1px solid black;
+  }
+
+  #taskTable tbody tr td:nth-child(3){
+      width: 40%;
+  }
+
+  
+  #taskTable tbody tr td:nth-child(2){
+    width: 20%;
+}
+
+.isComplete{
+    background-color: rgb(110, 238, 110);
+}
+
+#foot{
+    text-align: right;
+}
+
+#foot span{
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px;
+}

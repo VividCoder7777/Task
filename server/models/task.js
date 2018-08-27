@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       get(){
         return moment(this.getDataValue('toDoDate')).format('YYYY-MM-DD');
       },
+    },
+    isTaskComplete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     }
   }, {});
   task.associate = function(models) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+var fileDownload = require('react-file-download');
 
 class TaskAPI{
 
@@ -46,14 +47,38 @@ class TaskAPI{
             });
     }
 
-    update_task_post(id, callback){
-        this.API.post('/task/' + id + '/edit')
+    update_task_post(id, body, callback){
+        this.API.post('/task/' + id + '/update', body)
             .then(result => {
-                callback(result);
+                callback(result.data);
             })
             .catch(error => {
                 callback(false);
             });
+    }
+
+    delete_task_post(id, callback){
+        this.API.post('/task/' + id + '/delete')
+                .then(result => {
+                    if (callback){
+                        callback(result)
+                    }
+                })
+                .catch(error => {
+                    if (callback){
+                        callback(error);
+                    }
+                });
+    }
+
+    get_export_data(format){
+        this.API.post('/tasks/' + format + '/export')
+        .then(result => {
+            fileDownload(result.data, 'filename.csv');
+        })
+        .catch(error => {
+          
+        });
     }
 }
 
