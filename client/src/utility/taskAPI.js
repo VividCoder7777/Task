@@ -5,7 +5,7 @@ class TaskAPI{
 
     constructor(){
         this.API = axios.create({
-            baseURL: 'http://localhost:5001/api',
+            baseURL: 'https://tasklist7777.herokuapp.com/api',
             timeout: 10000,
         })
     }
