@@ -11,6 +11,10 @@ console.log('ENV IS');
 console.log(env);
 if (config.use_env_variable) {
   console.log('YO');
+  console.log('ENV IS ');
+  console.log(process.env[config.use_env_variable]);
+  console.log('CONFIG IS');
+  console.log(config);
   var sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   console.log('NO!');
