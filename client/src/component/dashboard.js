@@ -53,7 +53,7 @@ export default class Dashboard extends React.Component{
             description: elements['description'].value,
             toDoDate: elements['toDoDate'].value
         }
-        console.log(body);
+
         taskAPI.create_task_post(body, this.createTaskCallback);
         this.getAllTask();
         this.clearInput();
