@@ -91,11 +91,11 @@ export default class EditTask extends React.Component{
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='title'>Task Title:</label></td>
-                                    <td><input id='title' name='title' type='text' defaultValue={this.state.title} required/></td>
+                                    <td><input id='title' name='title' type='text' defaultValue={this.state.title} required autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='description'>Description:</label></td>
-                                    <td><input id='description' name='description' type='text' defaultValue={this.state.description} required/></td>
+                                    <td><input id='description' name='description' type='text' defaultValue={this.state.description} required autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
