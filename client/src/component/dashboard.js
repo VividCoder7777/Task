@@ -216,11 +216,11 @@ export default class Dashboard extends React.Component{
                     </tr>
                     <tr>
                         <td><label htmlFor='title'>Task Title:</label></td>
-                        <td><input id='title' name='title' type='text' required/></td>
+                        <td><input id='title' name='title' type='text' required autocomplete="off"/></td>
                     </tr>
                     <tr>
                         <td><label htmlFor='description'>Description:</label></td>
-                        <td><input id='description' name='description' type='text'/></td>
+                        <td><input id='description' name='description' type='text' autocomplete="off"/></td>
                     </tr>
                     <tr>
                         <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
