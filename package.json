@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "SET PORT=5001 && nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build"
   },
   "dependencies": {
     "concurrently": "^3.6.1",
