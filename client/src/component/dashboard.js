@@ -198,7 +198,7 @@ export default class Dashboard extends React.Component{
 
         const displayErrors = this.state.displayErrors;
         let currentDate = new Date();
-        currentDate.setDate(new Date().getDate() + 1);
+        currentDate.setDate(new Date().getDate());
         currentDate = Moment(currentDate).format('YYYY-MM-DD');
         this.getDailyTask();
 
