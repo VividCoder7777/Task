@@ -3,6 +3,7 @@ import {Link, Router} from 'react-router-dom';
 import taskAPI from '../utility/taskAPI';
 import Popup from "reactjs-popup";
 import Moment from 'moment';
+import TaskTable from './taskTable';
 
 export default class Dashboard extends React.Component{
 
@@ -52,7 +53,7 @@ export default class Dashboard extends React.Component{
             description: elements['description'].value,
             toDoDate: elements['toDoDate'].value
         }
-
+        console.log(body);
         taskAPI.create_task_post(body, this.createTaskCallback);
         this.getAllTask();
         this.clearInput();
@@ -150,11 +151,56 @@ export default class Dashboard extends React.Component{
         }
     }
 
+    getDailyTask(){
+        
+        let dailyTask = [];
+        let currentDate = new Date();
+        currentDate = Moment(currentDate).format('YYYY-MM-DD');
+
+        for (let i =0; i < this.state.tasks.length; i++){
+            if (currentDate == this.state.tasks[i].toDoDate){
+                dailyTask.push(this.state.tasks[i]);
+            } 
+        }
+
+        return dailyTask;
+    }
+
+    getFutureTask(){
+        let futureTasks = [];
+        let currentDate = new Date();
+        currentDate = Moment(currentDate).format('YYYY-MM-DD');
+
+        for (let i =0; i < this.state.tasks.length; i++){
+            if (currentDate < this.state.tasks[i].toDoDate){
+                futureTasks.push(this.state.tasks[i]);
+            } 
+        }
+
+        return futureTasks;
+    }
+
+    getPastTask(){
+        let pastTasks = [];
+        let currentDate = new Date();
+        currentDate = Moment(currentDate).format('YYYY-MM-DD');
+
+        for (let i =0; i < this.state.tasks.length; i++){
+            if (currentDate > this.state.tasks[i].toDoDate){
+                pastTasks.push(this.state.tasks[i]);
+            } 
+        }
+
+        return pastTasks;
+    }
+
     render(){
 
         const displayErrors = this.state.displayErrors;
         let currentDate = new Date();
+        currentDate.setDate(new Date().getDate() + 1);
         currentDate = Moment(currentDate).format('YYYY-MM-DD');
+        this.getDailyTask();
 
         return (
         <div>
@@ -186,7 +232,7 @@ export default class Dashboard extends React.Component{
                     </tbody>
                 </table>
             </form>
-
+            
             <div className='dailyTask'>
                 <h2>Today's Tasks</h2>
                 <table id='taskTable'>
@@ -200,7 +246,52 @@ export default class Dashboard extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.tasks.map((value, index)=>{
+                        {this.getDailyTask().length === 0 ? <tr><td colSpan='5'>No Tasks For Today!</td></tr> : this.getDailyTask().map((value, index)=>{
+                            return (
+                                <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
+                                    <td>{index+1}</td>
+                                    <td>{value.title}</td>
+                                    <td>{value.description}</td>
+                                    <td>{value.toDoDate}</td>
+                                    <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
+                                    <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
+                                    <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
+                                </tr>
+                                )
+                        })}
+                      
+                    </tbody>
+                    <tfoot id='foot'>
+                        <tr>
+                            <td colSpan='7'>
+                                <form onSubmit={this.handleExport}>
+                                    <span>Exports as:</span>
+                                    <select defaultValue='' name='export'>
+                                        <option value='' disabled>Select your format</option>
+                                        <option value='csv'>CSV</option>
+                                    </select>
+                                    <button>Export</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div className='upcomingTask'>
+                <h2>Future's Tasks</h2>
+                <table id='taskTable'>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>To Do Date</th>
+                            <th colSpan='3'>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.getFutureTask().map((value, index)=>{
                             return (
                             <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
                                 <td>{index+1}</td>
@@ -229,10 +320,49 @@ export default class Dashboard extends React.Component{
                         </tr>
                     </tfoot>
                 </table>
-            </div>
-
+            </div>  
             <div className='upcomingTask'>
-            <h2>Future's Tasks</h2>
+                <h2>Past Tasks</h2>
+                <table id='taskTable'>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>To Do Date</th>
+                            <th colSpan='3'>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.getPastTask().map((value, index)=>{
+                            return (
+                            <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
+                                <td>{index+1}</td>
+                                <td>{value.title}</td>
+                                <td>{value.description}</td>
+                                <td>{value.toDoDate}</td>
+                                <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
+                                <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
+                                <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
+                            </tr>
+                            )
+                        })}
+                    </tbody>
+                    <tfoot id='foot'>
+                        <tr>
+                            <td colSpan='7'>
+                                <form onSubmit={this.handleExport}>
+                                    <span>Exports as:</span>
+                                    <select defaultValue='' name='export'>
+                                        <option value='' disabled>Select your format</option>
+                                        <option value='csv'>CSV</option>
+                                    </select>
+                                    <button>Export</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>  
         </div>
         );
