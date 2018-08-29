@@ -3,12 +3,23 @@ var fileDownload = require('react-file-download');
 
 class TaskAPI{
 
+    // https://tasklist7777.herokuapp.com/api
     constructor(){
-        this.API = axios.create({
-            baseURL: 'https://tasklist7777.herokuapp.com/api',
-            timeout: 10000,
-        })
+        let env = process.env.NODE_ENV;
+        console.log('THE ENV IS ');
+        console.log(env);
+
+        if (env === 'production'){
+            this.API = axios.create({
+                baseURL: process.env.REACT_APP_PROD_PROXY
+            });
+        } else if (env === 'development'){
+            this.API = axios.create({
+                baseURL: process.env.REACT_APP_DEV_PROXY
+            });
+        }
     }
+
     create_task_post(body, callback){
         
         this.API.post('/task/create', body)

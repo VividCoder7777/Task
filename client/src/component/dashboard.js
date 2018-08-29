@@ -26,6 +26,7 @@ export default class Dashboard extends React.Component{
       }
     
     componentDidMount(){
+        console.log(process.env);
         taskAPI.read_all_task_get(this.updateTasksCallback);
     }
 
@@ -204,6 +205,7 @@ export default class Dashboard extends React.Component{
 
         return (
         <div>
+          
             <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
                 <h2>Create A Task</h2>
                 <table>
@@ -216,11 +218,11 @@ export default class Dashboard extends React.Component{
                     </tr>
                     <tr>
                         <td><label htmlFor='title'>Task Title:</label></td>
-                        <td><input id='title' name='title' type='text' required autocomplete="off"/></td>
+                        <td><input id='title' name='title' type='text' required autoComplete="off"/></td>
                     </tr>
                     <tr>
                         <td><label htmlFor='description'>Description:</label></td>
-                        <td><input id='description' name='description' type='text' autocomplete="off"/></td>
+                        <td><input id='description' name='description' type='text' autoComplete="off"/></td>
                     </tr>
                     <tr>
                         <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
@@ -234,7 +236,7 @@ export default class Dashboard extends React.Component{
             </form>
             
             <div className='dailyTask'>
-                <h2>Today's Tasks</h2>
+                <h2>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h2>
                 <table id='taskTable'>
                     <thead>
                         <tr>

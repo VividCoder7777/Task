@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build"
+    "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build",
+    "dev": "concurrently \"SET PORT=5001 && nodemon ./bin/www\" \"cd client && npm run build\"",
+    "start-dev": "SET PORT=5001 && nodemon ./bin/www"
   },
   "dependencies": {
     "concurrently": "^3.6.1",
