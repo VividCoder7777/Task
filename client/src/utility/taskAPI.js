@@ -6,8 +6,6 @@ class TaskAPI{
     // https://tasklist7777.herokuapp.com/api
     constructor(){
         let env = process.env.NODE_ENV;
-        console.log('THE ENV IS ');
-        console.log(env);
 
         if (env === 'production'){
             this.API = axios.create({
