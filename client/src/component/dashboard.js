@@ -26,7 +26,6 @@ export default class Dashboard extends React.Component{
       }
     
     componentDidMount(){
-        console.log(process.env);
         taskAPI.read_all_task_get(this.updateTasksCallback);
     }
 
