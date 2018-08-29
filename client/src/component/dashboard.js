@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component{
     componentDidMount(){
         taskAPI.read_all_task_get(this.updateTasksCallback);
     }
-
+    // 
     updateTasksCallback(result){
 
         if (result){
