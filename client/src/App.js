@@ -6,7 +6,6 @@ import Dashboard from './component/dashboard';
 import Edit from './component/edit';
 import Error from './component/error';
 import TaskAPI from './utility/taskAPI';
-require('dotenv').config();
 
 // The main container
 class App extends Component {
