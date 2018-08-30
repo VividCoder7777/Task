@@ -20,6 +20,8 @@ class App extends Component {
         <nav className='nav'>
           <ul id='flexNav'>
             <li><Link to='/'>Get more done with Task Creator</Link></li>
+            <li>About</li>
+            <li>Get Started</li>
           </ul>
         </nav>
         <div id='content'>

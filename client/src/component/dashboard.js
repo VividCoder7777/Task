@@ -3,7 +3,8 @@ import {Link, Router} from 'react-router-dom';
 import taskAPI from '../utility/taskAPI';
 import Popup from "reactjs-popup";
 import Moment from 'moment';
-import TaskTable from './taskTable';
+import * as Loader from 'react-spinners';
+import TaskItem from './taskItem';
 
 export default class Dashboard extends React.Component{
 
@@ -19,9 +20,12 @@ export default class Dashboard extends React.Component{
         this.handleComplete = this.handleComplete.bind(this);
         this.updateOneTaskCallback = this.updateOneTaskCallback.bind(this);
         this.handleExport = this.handleExport.bind(this);
+        this.getTasks = this.getTasks.bind(this);
+        this.showLoading = this.showLoading.bind(this);
 
         this.state = {
           tasks: [],
+          finishedLoading: false
         };
       }
     
@@ -32,9 +36,12 @@ export default class Dashboard extends React.Component{
     updateTasksCallback(result){
 
         if (result){
-        this.setState({
-            tasks: result
-        });
+            // Remove Loader
+
+            this.setState({
+                tasks: result,
+                finishedLoading: true
+             });
         } else {
         
         }
@@ -194,6 +201,40 @@ export default class Dashboard extends React.Component{
         return pastTasks;
     }
 
+    showLoading(){
+        return (
+            <div id='loader'>
+                <Loader.PulseLoader
+                    sizeUnit={"px"}
+                    size={10}
+                    color={'#123abc'}
+                    loading={this.state.loading}
+                />
+            </div>
+        );
+    }
+
+    getTasks(){
+      
+        if (this.state.tasks.length === 0){
+            return (
+                <p><b>There are no task for today!</b></p>
+            );
+        } else {
+            let taskItems = [];
+            let tasks = this.state.tasks.splice(0);
+            console.log(tasks);
+            for (let i = 0; i < tasks.length; i++){
+                taskItems.push(
+                    (
+                        <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description}/>
+                    )
+                );
+            }
+            return taskItems;
+        }
+    }
+
     render(){
 
         const displayErrors = this.state.displayErrors;
@@ -234,7 +275,9 @@ export default class Dashboard extends React.Component{
             <div id='taskInfo'>
                 <div className='dailyTask'>
                     <h3>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h3>
-                    <table id='taskTable'>
+                    <div id='taskContainer'>
+                        {this.state.finishedLoading === true ? this.getTasks() : this.showLoading()}
+                    {/* <table id='taskTable'>
                         <thead>
                             <tr>
                                 <th>Task</th>
@@ -274,95 +317,12 @@ export default class Dashboard extends React.Component{
                                 </td>
                             </tr>
                         </tfoot>
-                    </table>
+                    </table> */}
+
+                   
+                    </div>
                 </div>
 
-                <div className='upcomingTask'>
-                    <h2>Future's Tasks</h2>
-                    <table id='taskTable'>
-                        <thead>
-                            <tr>
-                                <th>Task</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>To Do Date</th>
-                                <th colSpan='3'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.getFutureTask().map((value, index)=>{
-                                return (
-                                <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
-                                    <td>{index+1}</td>
-                                    <td>{value.title}</td>
-                                    <td>{value.description}</td>
-                                    <td>{value.toDoDate}</td>
-                                    <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
-                                    <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
-                                    <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
-                                </tr>
-                                )
-                            })}
-                        </tbody>
-                        <tfoot id='foot'>
-                            <tr>
-                                <td colSpan='7'>
-                                    <form onSubmit={this.handleExport}>
-                                        <span>Exports as:</span>
-                                        <select defaultValue='' name='export'>
-                                            <option value='' disabled>Select your format</option>
-                                            <option value='csv'>CSV</option>
-                                        </select>
-                                        <button>Export</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>  
-                <div className='upcomingTask'>
-                    <h2>Past Tasks</h2>
-                    <table id='taskTable'>
-                        <thead>
-                            <tr>
-                                <th>Task</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>To Do Date</th>
-                                <th colSpan='3'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.getPastTask().map((value, index)=>{
-                                return (
-                                <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
-                                    <td>{index+1}</td>
-                                    <td>{value.title}</td>
-                                    <td>{value.description}</td>
-                                    <td>{value.toDoDate}</td>
-                                    <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
-                                    <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
-                                    <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
-                                </tr>
-                                )
-                            })}
-                        </tbody>
-                        <tfoot id='foot'>
-                            <tr>
-                                <td colSpan='7'>
-                                    <form onSubmit={this.handleExport}>
-                                        <span>Exports as:</span>
-                                        <select defaultValue='' name='export'>
-                                            <option value='' disabled>Select your format</option>
-                                            <option value='csv'>CSV</option>
-                                        </select>
-                                        <button>Export</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>  
             </div>
         </div>
         );
