@@ -204,51 +204,94 @@ export default class Dashboard extends React.Component{
 
         return (
         <div>
-          
-            <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
-                <h2>Create A Task</h2>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>
-                        <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}>
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label htmlFor='title'>Task Title:</label></td>
-                        <td><input id='title' name='title' type='text' required autoComplete="off"/></td>
-                    </tr>
-                    <tr>
-                        <td><label htmlFor='description'>Description:</label></td>
-                        <td><input id='description' name='description' type='text' autoComplete="off"/></td>
-                    </tr>
-                    <tr>
-                        <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
-                        <td><input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/></td>
-                    </tr>
-                    <tr>
-                        <td><button>Submit</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
-            
-            <div className='dailyTask'>
-                <h2>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h2>
-                <table id='taskTable'>
-                    <thead>
+            <div id='taskContent'>
+                <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
+                    <h3>Create A Task</h3>
+                    <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}></div>
+                    <table>
+                        <tbody>
+                    
                         <tr>
-                            <th>Task</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>To Do Date</th>
-                            <th colSpan='3'>Action</th>
+                            <td><label htmlFor='title'>Task Title:</label></td>
+                            <td><input id='title' name='title' type='text' required autoComplete="off"/></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {this.getDailyTask().length === 0 ? <tr><td colSpan='5'>No Tasks For Today!</td></tr> : this.getDailyTask().map((value, index)=>{
-                            return (
+                        <tr>
+                            <td><label htmlFor='description'>Description:</label></td>
+                            <td><input id='description' name='description' type='text' autoComplete="off"/></td>
+                        </tr>
+                        <tr>
+                            <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
+                            <td><input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/></td>
+                        </tr>
+                        <tr>
+                            <td><button>Submit</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div id='taskInfo'>
+                <div className='dailyTask'>
+                    <h3>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h3>
+                    <table id='taskTable'>
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>To Do Date</th>
+                                <th colSpan='3'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.getDailyTask().length === 0 ? <tr><td colSpan='5'>No Tasks For Today!</td></tr> : this.getDailyTask().map((value, index)=>{
+                                return (
+                                    <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
+                                        <td>{index+1}</td>
+                                        <td>{value.title}</td>
+                                        <td>{value.description}</td>
+                                        <td>{value.toDoDate}</td>
+                                        <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
+                                        <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
+                                        <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
+                                    </tr>
+                                    )
+                            })}
+                        
+                        </tbody>
+                        <tfoot id='foot'>
+                            <tr>
+                                <td colSpan='7'>
+                                    <form onSubmit={this.handleExport}>
+                                        <span>Exports as:</span>
+                                        <select defaultValue='' name='export'>
+                                            <option value='' disabled>Select your format</option>
+                                            <option value='csv'>CSV</option>
+                                        </select>
+                                        <button>Export</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div className='upcomingTask'>
+                    <h2>Future's Tasks</h2>
+                    <table id='taskTable'>
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>To Do Date</th>
+                                <th colSpan='3'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.getFutureTask().map((value, index)=>{
+                                return (
                                 <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
                                     <td>{index+1}</td>
                                     <td>{value.title}</td>
@@ -259,112 +302,68 @@ export default class Dashboard extends React.Component{
                                     <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
                                 </tr>
                                 )
-                        })}
-                      
-                    </tbody>
-                    <tfoot id='foot'>
-                        <tr>
-                            <td colSpan='7'>
-                                <form onSubmit={this.handleExport}>
-                                    <span>Exports as:</span>
-                                    <select defaultValue='' name='export'>
-                                        <option value='' disabled>Select your format</option>
-                                        <option value='csv'>CSV</option>
-                                    </select>
-                                    <button>Export</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                            })}
+                        </tbody>
+                        <tfoot id='foot'>
+                            <tr>
+                                <td colSpan='7'>
+                                    <form onSubmit={this.handleExport}>
+                                        <span>Exports as:</span>
+                                        <select defaultValue='' name='export'>
+                                            <option value='' disabled>Select your format</option>
+                                            <option value='csv'>CSV</option>
+                                        </select>
+                                        <button>Export</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>  
+                <div className='upcomingTask'>
+                    <h2>Past Tasks</h2>
+                    <table id='taskTable'>
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>To Do Date</th>
+                                <th colSpan='3'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.getPastTask().map((value, index)=>{
+                                return (
+                                <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
+                                    <td>{index+1}</td>
+                                    <td>{value.title}</td>
+                                    <td>{value.description}</td>
+                                    <td>{value.toDoDate}</td>
+                                    <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
+                                    <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
+                                    <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
+                                </tr>
+                                )
+                            })}
+                        </tbody>
+                        <tfoot id='foot'>
+                            <tr>
+                                <td colSpan='7'>
+                                    <form onSubmit={this.handleExport}>
+                                        <span>Exports as:</span>
+                                        <select defaultValue='' name='export'>
+                                            <option value='' disabled>Select your format</option>
+                                            <option value='csv'>CSV</option>
+                                        </select>
+                                        <button>Export</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>  
             </div>
-
-            <div className='upcomingTask'>
-                <h2>Future's Tasks</h2>
-                <table id='taskTable'>
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>To Do Date</th>
-                            <th colSpan='3'>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.getFutureTask().map((value, index)=>{
-                            return (
-                            <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
-                                <td>{index+1}</td>
-                                <td>{value.title}</td>
-                                <td>{value.description}</td>
-                                <td>{value.toDoDate}</td>
-                                <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
-                                <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
-                                <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
-                            </tr>
-                            )
-                        })}
-                    </tbody>
-                    <tfoot id='foot'>
-                        <tr>
-                            <td colSpan='7'>
-                                <form onSubmit={this.handleExport}>
-                                    <span>Exports as:</span>
-                                    <select defaultValue='' name='export'>
-                                        <option value='' disabled>Select your format</option>
-                                        <option value='csv'>CSV</option>
-                                    </select>
-                                    <button>Export</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>  
-            <div className='upcomingTask'>
-                <h2>Past Tasks</h2>
-                <table id='taskTable'>
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>To Do Date</th>
-                            <th colSpan='3'>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.getPastTask().map((value, index)=>{
-                            return (
-                            <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
-                                <td>{index+1}</td>
-                                <td>{value.title}</td>
-                                <td>{value.description}</td>
-                                <td>{value.toDoDate}</td>
-                                <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
-                                <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
-                                <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
-                            </tr>
-                            )
-                        })}
-                    </tbody>
-                    <tfoot id='foot'>
-                        <tr>
-                            <td colSpan='7'>
-                                <form onSubmit={this.handleExport}>
-                                    <span>Exports as:</span>
-                                    <select defaultValue='' name='export'>
-                                        <option value='' disabled>Select your format</option>
-                                        <option value='csv'>CSV</option>
-                                    </select>
-                                    <button>Export</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>  
         </div>
         );
     }

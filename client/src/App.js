@@ -6,7 +6,6 @@ import Dashboard from './component/dashboard';
 import Edit from './component/edit';
 import Error from './component/error';
 import TaskAPI from './utility/taskAPI';
-
 // The main container
 class App extends Component {
 
@@ -18,16 +17,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className='nav'>
-          <ul>
+        <nav className='nav'>
+          <ul id='flexNav'>
             <li><Link to='/'>Get more done with Task Creator</Link></li>
           </ul>
-        </header>
-        <Switch>
-          <Route path='/' exact component={Dashboard}/>
-          <Route path='/task/:id/edit' component={Edit}/>
-          <Route component={Error}/>
-        </Switch>
+        </nav>
+        <div id='content'>
+          <Switch>
+            <Route path='/' exact component={Dashboard}/>
+            <Route path='/task/:id/edit' component={Edit}/>
+            <Route component={Error}/>
+          </Switch>
+        </div>
       </div>
     );
   }
