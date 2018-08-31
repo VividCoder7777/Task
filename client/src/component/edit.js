@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/edit.css';
 import taskAPI from '../utility/taskAPI';
 import {Route, Redirect, Link} from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 export default class EditTask extends React.Component{
 
@@ -117,9 +117,9 @@ export default class EditTask extends React.Component{
         } else {
             return (
                 <div>
-                    <ClipLoader
+                    <PulseLoader
                         sizeUnit={"px"}
-                        size={150}
+                        size={25}
                         color={'#123abc'}
                         loading={this.state.loading}
                     />

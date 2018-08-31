@@ -38,9 +38,18 @@
     display: flex;
 }
 
+#taskForm{
+    display: flow-root;
+}
+
+#calcon{
+
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgb(228, 145, 145);
+}
+
 #taskForm h3{
     text-align: center;
-
     padding: 10px;
     border-bottom: 2px solid rgb(255, 163, 183);
     margin-left: auto;
@@ -104,11 +113,7 @@
     border-color: red;
   }
 
-  table a {
-    color: rgba(23, 123, 218, 0.767);
-    text-decoration: none;
-  }
-/* 
+
   .nav a:visited{
       color: #777;
   } */
@@ -143,29 +148,7 @@
     cursor: pointer;
   }
 
-  #taskTable{
-    table-layout:fixed;
-    text-align: center;
-    width: 100%;
-  }
 
-  #taskTable th{
-    background-color: rgba(23, 123, 218, 0.767);
-  }
-
-  #taskTable thead th, #taskTable tbody td, #taskTable td{
-      min-width: 100px;
-      border: 1px solid black;
-  }
-
-  #taskTable tbody tr td:nth-child(3){
-      width: 40%;
-  }
-
-  
-  #taskTable tbody tr td:nth-child(2){
-    width: 20%;
-}
 
 .isComplete{
     background-color: rgb(110, 238, 110);
@@ -201,6 +184,8 @@
     margin-left: 1%;
     border-bottom: 2px solid rgb(228, 145, 145);
     padding-bottom:15px;
+    position: sticky;
+    top: 0;
 }
 
 #taskInfo{
@@ -223,4 +208,9 @@
 
 #loader{
 
+}
+
+#taskcon{
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgb(228, 145, 145);
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link, Router} from 'react-router-dom';
 import taskAPI from '../utility/taskAPI';
-import Popup from "reactjs-popup";
 import Moment from 'moment';
 import * as Loader from 'react-spinners';
 import TaskItem from './taskItem';
+import Calendar from 'react-calendar'
 
 export default class Dashboard extends React.Component{
 
@@ -267,25 +267,34 @@ export default class Dashboard extends React.Component{
         return (
         <div>
             <div id='taskContent'>
-                <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
-                    <h3>Create A Task</h3>
-                    <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}></div>
-                    <div className='input'>
-                        <label htmlFor='title'>Task Title:</label>
-                        <input id='title' name='title' type='text' required autoComplete="off"/>
-                    </div>
-                    <div className='input'>
-                        <label htmlFor='description'>Description:</label>
-                        <input id='description' name='description' type='text' autoComplete="off" onFocus={(event)=>{this.showTasks(event)}}/>
-                    </div>
-                    <div className='input'>
-                        <label htmlFor='toDoDate'>Scheduled At:</label>
-                        <input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/>
-                    </div>
-                    <div className='input'>
-                        <button>Submit</button>
-                    </div>
-                </form>
+                <div id='taskcon'>
+                    <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
+                        <h3>Create A Task</h3>
+                        <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}></div>
+                        <div className='input'>
+                            <label htmlFor='title'>Task Title:</label>
+                            <input id='title' name='title' type='text' required autoComplete="off"/>
+                        </div>
+                        <div className='input'>
+                            <label htmlFor='description'>Description:</label>
+                            <input id='description' name='description' type='text' autoComplete="off" onFocus={(event)=>{this.showTasks(event)}}/>
+                        </div>
+                        <div className='input'>
+                            <label htmlFor='toDoDate'>Scheduled At:</label>
+                            <input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/>
+                        </div>
+                        <div className='input'>
+                            <button>Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div id='calcon'>
+                    <h4>Select The Date</h4>
+                    <Calendar/>
+                </div>
+                <div>
+                    <h4>Export</h4>
+                </div>
             </div>
 
             <div id='taskInfo'>
