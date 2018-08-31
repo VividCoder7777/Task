@@ -28,6 +28,7 @@
     margin: auto;
 }
 
+
 .nav ul li{
     list-style-type: none;
     padding: 10px;
@@ -48,6 +49,35 @@
 
 }
 
+#loader{
+    text-align: center;
+}
+
+#taskForm > div > label{
+    font-weight: bold;
+}
+
+#taskForm > div > input{
+    box-sizing: content-box;
+    width: 99%;
+}
+
+#taskForm button{
+    background: rgb(66, 65, 65);
+    border: 1px solid rgb(48, 46, 46);
+    padding: 8px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-radius: 25px;
+    color: rgb(238, 238, 238);
+    float: right;
+}
+
+.input{
+    margin-bottom: 1rem;
+    
+}
+
 #currentDate{
     padding: 5px;
 }
@@ -58,6 +88,7 @@
     padding: 10px;
     border-bottom: 2px solid rgb(240, 181, 255);
 }
+
 .successful{
     color: rgb(33, 214, 33);
     padding: 5px;
@@ -164,10 +195,11 @@
 
 #taskContent{
     float: left;
-    width: 24.5%;
-    margin-right: 1%;
+    width: 20.5%;
+    margin-right: 3%;
     margin-left: 1%;
-    height:100%;
+    border-bottom: 2px solid rgb(228, 145, 145);
+    padding-bottom:15px;
 }
 
 #taskInfo{
@@ -175,12 +207,9 @@
     width: 73.5%;
 }
 
-#taskform tr{
-    margin-bottom: 10px;
-}
-
 #status{
     text-align: center;
+    margin-bottom: 15px;
 }
 
 #root{
@@ -188,7 +217,7 @@
 }
 
 #taskContainer{
-    text-align: center;
+    
 }
 
 #loader{

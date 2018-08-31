@@ -6,15 +6,13 @@ export default class TaskItem extends React.Component{
 
 
     render(){
-        console.log('HELLO');
-        console.log(this.props);
         let title = this.props.title;
         let description = this.props.description;
         
         return (
-            <div>
-                <h4>{title}</h4>
-                <p>{description}</p>
+            <div className='taskEntry'>
+                <h4>Task: {title}</h4>
+                <p><b>Description:</b> {description}</p>
             </div>
         )
     }

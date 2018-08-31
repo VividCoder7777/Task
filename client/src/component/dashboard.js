@@ -31,13 +31,15 @@ export default class Dashboard extends React.Component{
     
     componentDidMount(){
         taskAPI.read_all_task_get(this.updateTasksCallback);
+        console.log('COMPONENT DID MOUNT!');
     }
     // 
     updateTasksCallback(result){
-
+        console.log('CALLBACK RESULTS ARE ');
+        for (let i of result){
+            console.log(i);
+        }
         if (result){
-            // Remove Loader
-
             this.setState({
                 tasks: result,
                 finishedLoading: true
@@ -51,6 +53,9 @@ export default class Dashboard extends React.Component{
     handleSubmit(event){
         event.preventDefault();
         let elements = event.target.elements;
+        let tasks = this.state.tasks.splice(0);
+        console.log('TASKS ARE ');
+        console.log(tasks);
 
         // successful
         if (event.target.checkValidity()){
@@ -66,7 +71,10 @@ export default class Dashboard extends React.Component{
         this.clearInput();
         } else {
         // failed
-        this.setState({ displayErrors: true });
+        this.setState({ 
+            displayErrors: true,
+            tasks: tasks
+        });
         }
     }
 
@@ -217,12 +225,15 @@ export default class Dashboard extends React.Component{
     getTasks(){
       
         if (this.state.tasks.length === 0){
+            console.log('THERE ARE 0 TASKS');
+            console.log(this.state);
             return (
                 <p><b>There are no task for today!</b></p>
             );
         } else {
             let taskItems = [];
             let tasks = this.state.tasks.splice(0);
+            console.log('TASK ARE');
             console.log(tasks);
             for (let i = 0; i < tasks.length; i++){
                 taskItems.push(
@@ -233,6 +244,12 @@ export default class Dashboard extends React.Component{
             }
             return taskItems;
         }
+    }
+
+    // delete when done
+    showTasks(event){
+        console.log('CURRENT STATE??');
+        console.log(this.state);
     }
 
     render(){
@@ -249,26 +266,21 @@ export default class Dashboard extends React.Component{
                 <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
                     <h3>Create A Task</h3>
                     <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}></div>
-                    <table>
-                        <tbody>
-                    
-                        <tr>
-                            <td><label htmlFor='title'>Task Title:</label></td>
-                            <td><input id='title' name='title' type='text' required autoComplete="off"/></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor='description'>Description:</label></td>
-                            <td><input id='description' name='description' type='text' autoComplete="off"/></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
-                            <td><input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/></td>
-                        </tr>
-                        <tr>
-                            <td><button>Submit</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div className='input'>
+                        <label htmlFor='title'>Task Title:</label>
+                        <input id='title' name='title' type='text' required autoComplete="off"/>
+                    </div>
+                    <div className='input'>
+                        <label htmlFor='description'>Description:</label>
+                        <input id='description' name='description' type='text' autoComplete="off" onFocus={(event)=>{this.showTasks(event)}}/>
+                    </div>
+                    <div className='input'>
+                        <label htmlFor='toDoDate'>Scheduled At:</label>
+                        <input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/>
+                    </div>
+                    <div className='input'>
+                        <button>Submit</button>
+                    </div>
                 </form>
             </div>
 
@@ -277,49 +289,6 @@ export default class Dashboard extends React.Component{
                     <h3>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h3>
                     <div id='taskContainer'>
                         {this.state.finishedLoading === true ? this.getTasks() : this.showLoading()}
-                    {/* <table id='taskTable'>
-                        <thead>
-                            <tr>
-                                <th>Task</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>To Do Date</th>
-                                <th colSpan='3'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.getDailyTask().length === 0 ? <tr><td colSpan='5'>No Tasks For Today!</td></tr> : this.getDailyTask().map((value, index)=>{
-                                return (
-                                    <tr key={value.id} className={value.isTaskComplete ? 'isComplete' : ''}>
-                                        <td>{index+1}</td>
-                                        <td>{value.title}</td>
-                                        <td>{value.description}</td>
-                                        <td>{value.toDoDate}</td>
-                                        <td className='completed'><button data-id={value.id} data-complete={value.isTaskComplete} onClick={this.handleComplete}>{value.isTaskComplete ? 'Undo' : 'Completed'}</button></td>
-                                        <td className='edit'><Link to={'/task/' + value.id + '/edit'}>Edit</Link></td>
-                                        <td className='delete'><button data-id = {value.id} onClick={this.handleDelete}>Delete</button></td> 
-                                    </tr>
-                                    )
-                            })}
-                        
-                        </tbody>
-                        <tfoot id='foot'>
-                            <tr>
-                                <td colSpan='7'>
-                                    <form onSubmit={this.handleExport}>
-                                        <span>Exports as:</span>
-                                        <select defaultValue='' name='export'>
-                                            <option value='' disabled>Select your format</option>
-                                            <option value='csv'>CSV</option>
-                                        </select>
-                                        <button>Export</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table> */}
-
-                   
                     </div>
                 </div>
 
