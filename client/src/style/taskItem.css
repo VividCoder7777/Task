@@ -1,4 +1,58 @@
 .taskEntry{
-    border-bottom: 2px solid  rgb(194, 155, 155);
-    
+    border-bottom: 2px solid rgb(194, 155, 155);
+}
+
+.taskEntryCompleted{
+    border-bottom: 2px solid rgb(194, 155, 155);
+}
+
+.taskEntryCompleted h4, .taskEntryCompleted p{
+    text-decoration: line-through;
+}
+
+#children{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+#children button, #children a{
+    background: rgb(247, 165, 165);
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    font-size: 1rem;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 5px;
+    color: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+
+
+#children a{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+div > span {
+    border-radius: 25px;
+    margin-top: 5px;
+    display: inline-block;
+    padding: 5px;
+    color: white;
+}
+
+.ongoing{
+    background: rgb(243, 217, 72);
+}
+
+.done{
+    background: rgb(107, 255, 107);
 }

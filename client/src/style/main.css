@@ -87,6 +87,7 @@
     text-align: center;text-align: center;
     padding: 10px;
     border-bottom: 2px solid rgb(240, 181, 255);
+    margin-bottom: 0;
 }
 
 .successful{

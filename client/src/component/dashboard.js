@@ -222,6 +222,7 @@ export default class Dashboard extends React.Component{
         );
     }
 
+    // make it grab only today's task
     getTasks(){
       
         if (this.state.tasks.length === 0){
@@ -232,13 +233,17 @@ export default class Dashboard extends React.Component{
             );
         } else {
             let taskItems = [];
-            let tasks = this.state.tasks.splice(0);
+            let tasks = this.state.tasks;
             console.log('TASK ARE');
             console.log(tasks);
             for (let i = 0; i < tasks.length; i++){
                 taskItems.push(
                     (
-                        <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description}/>
+                        <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description} isCompleted={tasks[i].isTaskComplete}>
+                            <button data-complete={tasks[i].isTaskComplete} data-id={tasks[i].id} onClick={this.handleComplete}>{tasks[i].isTaskComplete == false ? 'Completed' : 'Undo'}</button>
+                            <button><Link to={'/task/' + tasks[i].id + '/edit'}>Edit</Link></button>
+                            <button data-id={tasks[i].id} onClick={this.handleDelete}>Delete</button>
+                        </TaskItem>
                     )
                 );
             }
@@ -258,7 +263,6 @@ export default class Dashboard extends React.Component{
         let currentDate = new Date();
         currentDate.setDate(new Date().getDate());
         currentDate = Moment(currentDate).format('YYYY-MM-DD');
-        this.getDailyTask();
 
         return (
         <div>
