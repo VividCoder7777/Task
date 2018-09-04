@@ -23,10 +23,13 @@ export default class Dashboard extends React.Component{
         this.getTasks = this.getTasks.bind(this);
         this.showLoading = this.showLoading.bind(this);
         this.getTaskProgression = this.getTaskProgression.bind(this);
+        this.handleCalenderChange = this.handleCalenderChange.bind(this);
+        this.handleCalenderDayClass = this.handleCalenderDayClass.bind(this);
 
         this.state = {
           tasks: [],
-          finishedLoading: false
+          finishedLoading: false,
+          currentDate: Moment(new Date()).format('YYYY-MM-DD')
         };
       }
     
@@ -36,7 +39,6 @@ export default class Dashboard extends React.Component{
     // 
     updateTasksCallback(result){
 
-        console.log(result);
         if (result){
             this.setState({
                 tasks: result,
@@ -224,14 +226,40 @@ export default class Dashboard extends React.Component{
         return progression;
     }
 
+    handleCalenderChange(date){
+        let formattedDate = Moment(date).format('YYYY-MM-DD');
+     
+        this.setState({
+            currentDate: formattedDate
+        });
+    }
+
+    handleCalenderDayClass({date, view}){
+        let formattedDate = Moment(date).format('YYYY-MM-DD');
+
+        return view === 'month' && this.dateHasTask(formattedDate) ? 'hasTask' : null;
+    }
+
+    dateHasTask(date){
+        let set = new Set();
+        let tasks = this.state.tasks;
+
+        for (let task of tasks){
+            set.add(task.toDoDate);
+        }
+        if (set.has(date)){
+           
+            return true;
+        } else {
+           
+            return false;
+        }
+
+    }
+
     render(){
-
         const displayErrors = this.state.displayErrors;
-        let currentDate = new Date();
-        currentDate.setDate(new Date().getDate());
-        currentDate = Moment(currentDate).format('YYYY-MM-DD');
-
-        let currentTasks = this.getTasks(currentDate);
+        let currentTasks = this.getTasks(this.state.currentDate);
 
         return (
         <div>
@@ -250,7 +278,7 @@ export default class Dashboard extends React.Component{
                         </div>
                         <div className='input'>
                             <label htmlFor='toDoDate'>Scheduled At:</label>
-                            <input id='toDoDate' name='toDoDate' defaultValue={currentDate} type='date' required/>
+                            <input id='toDoDate' name='toDoDate' defaultValue={this.state.currentDate} type='date' required/>
                         </div>
                         <div className='input'>
                             <button>Submit</button>
@@ -259,7 +287,7 @@ export default class Dashboard extends React.Component{
                 </div>
                 <div id='calcon'>
                     <h4>Select The Date</h4>
-                    <Calendar/>
+                    <Calendar minDetail='year' onClickDay={this.handleCalenderChange} tileClassName={this.handleCalenderDayClass}/>
                 </div>
                 <div>
                     <h4>Export</h4>
@@ -269,10 +297,10 @@ export default class Dashboard extends React.Component{
             <div id='taskInfo'>
                 <div className='dailyTask'>
                     <h3>
-                        Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span>
+                        Today's Tasks: <span id='currentDate'>{this.state.currentDate}</span>
                     </h3>
                     <div className={currentTasks.length ? 'show' : 'hidden'}>
-                        <p id='progression'>{this.getTaskProgression(currentDate)}/{currentTasks.length} Task Completed</p>
+                        <p id='progression'>{this.getTaskProgression(this.state.currentDate)}/{currentTasks.length} Task Completed</p>
                     </div>
                     <div id='taskContainer'>
                         {this.state.finishedLoading === true ? 

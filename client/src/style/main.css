@@ -243,3 +243,7 @@
     font-style: italic;
     font-weight: bold;
 }
+
+.hasTask{
+    background: rgb(235, 231, 30) !important;
+}
