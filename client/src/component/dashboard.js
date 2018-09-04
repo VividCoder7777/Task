@@ -22,6 +22,7 @@ export default class Dashboard extends React.Component{
         this.handleExport = this.handleExport.bind(this);
         this.getTasks = this.getTasks.bind(this);
         this.showLoading = this.showLoading.bind(this);
+        this.getTaskProgression = this.getTaskProgression.bind(this);
 
         this.state = {
           tasks: [],
@@ -31,21 +32,21 @@ export default class Dashboard extends React.Component{
     
     componentDidMount(){
         taskAPI.read_all_task_get(this.updateTasksCallback);
-        console.log('COMPONENT DID MOUNT!');
     }
     // 
     updateTasksCallback(result){
-        console.log('CALLBACK RESULTS ARE ');
-        for (let i of result){
-            console.log(i);
-        }
+
+        console.log(result);
         if (result){
             this.setState({
                 tasks: result,
                 finishedLoading: true
              });
         } else {
-        
+            this.setState({
+                finishedLoading: true,
+                errorMessage: 'An error has a occurred please try again in a few mintues'
+            });
         }
 
     }
@@ -54,8 +55,6 @@ export default class Dashboard extends React.Component{
         event.preventDefault();
         let elements = event.target.elements;
         let tasks = this.state.tasks.splice(0);
-        console.log('TASKS ARE ');
-        console.log(tasks);
 
         // successful
         if (event.target.checkValidity()){
@@ -166,49 +165,6 @@ export default class Dashboard extends React.Component{
         }
     }
 
-    getDailyTask(){
-        
-        let dailyTask = [];
-        let currentDate = new Date();
-        currentDate = Moment(currentDate).format('YYYY-MM-DD');
-
-        for (let i =0; i < this.state.tasks.length; i++){
-            if (currentDate == this.state.tasks[i].toDoDate){
-                dailyTask.push(this.state.tasks[i]);
-            } 
-        }
-
-        return dailyTask;
-    }
-
-    getFutureTask(){
-        let futureTasks = [];
-        let currentDate = new Date();
-        currentDate = Moment(currentDate).format('YYYY-MM-DD');
-
-        for (let i =0; i < this.state.tasks.length; i++){
-            if (currentDate < this.state.tasks[i].toDoDate){
-                futureTasks.push(this.state.tasks[i]);
-            } 
-        }
-
-        return futureTasks;
-    }
-
-    getPastTask(){
-        let pastTasks = [];
-        let currentDate = new Date();
-        currentDate = Moment(currentDate).format('YYYY-MM-DD');
-
-        for (let i =0; i < this.state.tasks.length; i++){
-            if (currentDate > this.state.tasks[i].toDoDate){
-                pastTasks.push(this.state.tasks[i]);
-            } 
-        }
-
-        return pastTasks;
-    }
-
     showLoading(){
         return (
             <div id='loader'>
@@ -223,20 +179,14 @@ export default class Dashboard extends React.Component{
     }
 
     // make it grab only today's task
-    getTasks(){
+    getTasks(date){
       
-        if (this.state.tasks.length === 0){
-            console.log('THERE ARE 0 TASKS');
-            console.log(this.state);
-            return (
-                <p><b>There are no task for today!</b></p>
-            );
-        } else {
-            let taskItems = [];
-            let tasks = this.state.tasks;
-            console.log('TASK ARE');
-            console.log(tasks);
-            for (let i = 0; i < tasks.length; i++){
+        let taskItems = [];
+        let tasks = this.state.tasks;
+
+        for (let i = 0; i < tasks.length; i++){
+
+            if (tasks[i].toDoDate == date){
                 taskItems.push(
                     (
                         <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description} isCompleted={tasks[i].isTaskComplete}>
@@ -247,14 +197,31 @@ export default class Dashboard extends React.Component{
                     )
                 );
             }
+        }
+
+        if (taskItems.length === 0){
+            return (
+                <p><b>There are no task for today!</b></p>
+            );
+        } else {
             return taskItems;
         }
     }
 
-    // delete when done
-    showTasks(event){
-        console.log('CURRENT STATE??');
-        console.log(this.state);
+    getTaskProgression(date){
+        
+        let tasks = this.state.tasks;
+        let progression = 0;
+
+        for (let i = 0; i < tasks.length; i++){
+            if (tasks[i].toDoDate === date){
+                if (tasks[i].isTaskComplete){
+                    progression++;
+                } 
+            }
+        }
+
+        return progression;
     }
 
     render(){
@@ -263,6 +230,8 @@ export default class Dashboard extends React.Component{
         let currentDate = new Date();
         currentDate.setDate(new Date().getDate());
         currentDate = Moment(currentDate).format('YYYY-MM-DD');
+
+        let currentTasks = this.getTasks(currentDate);
 
         return (
         <div>
@@ -273,11 +242,11 @@ export default class Dashboard extends React.Component{
                         <div id='status' className = {this.state.displayMessage === true ? 'successful' : 'failed'}></div>
                         <div className='input'>
                             <label htmlFor='title'>Task Title:</label>
-                            <input id='title' name='title' type='text' required autoComplete="off"/>
+                            <input id='title' name='title' type='text' required autoComplete="off"  maxLength="30"/>
                         </div>
                         <div className='input'>
                             <label htmlFor='description'>Description:</label>
-                            <input id='description' name='description' type='text' autoComplete="off" onFocus={(event)=>{this.showTasks(event)}}/>
+                            <input id='description' name='description' type='text' autoComplete="off"/>
                         </div>
                         <div className='input'>
                             <label htmlFor='toDoDate'>Scheduled At:</label>
@@ -299,12 +268,18 @@ export default class Dashboard extends React.Component{
 
             <div id='taskInfo'>
                 <div className='dailyTask'>
-                    <h3>Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span></h3>
+                    <h3>
+                        Today's Tasks:{' '}<span id='currentDate'>{currentDate}</span>
+                    </h3>
+                    <div className={currentTasks.length ? 'show' : 'hidden'}>
+                        <p id='progression'>{this.getTaskProgression(currentDate)}/{currentTasks.length} Task Completed</p>
+                    </div>
                     <div id='taskContainer'>
-                        {this.state.finishedLoading === true ? this.getTasks() : this.showLoading()}
+                        {this.state.finishedLoading === true ? 
+                                                                (this.state.errorMessage ? this.state.errorMessage : currentTasks) 
+                                                                : this.showLoading()}
                     </div>
                 </div>
-
             </div>
         </div>
         );

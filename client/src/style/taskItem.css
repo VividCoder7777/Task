@@ -17,7 +17,7 @@
 
 
 #children button, #children a{
-    background: rgb(247, 165, 165);
+    background: rgb(65, 194, 194);
     display: inline-block;
     width: 120px;
     text-align: center;
@@ -32,7 +32,9 @@
     border-top-right-radius: 25px;
 }
 
-
+#children button:hover{
+    opacity: 0.8;
+}
 
 #children a{
     margin: 0;
@@ -55,4 +57,26 @@ div > span {
 
 .done{
     background: rgb(107, 255, 107);
+}
+
+.show{
+    display: block;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+#progression{
+    width: 30%;
+    display: block;
+    text-align: center;
+    background: #f8f8f8;
+    padding: 5px;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+    font-weight: bold;
 }

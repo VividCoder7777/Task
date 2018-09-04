@@ -31,6 +31,9 @@ class App extends Component {
             <Route component={Error}/>
           </Switch>
         </div>
+        <footer id='footer'>
+            
+        </footer>
       </div>
     );
   }
