@@ -79,7 +79,7 @@ export default class EditTask extends React.Component{
             return (
                 <div>
                     <div>
-                        <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
+                        <form id='taskEditForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
                             <h2>Edit Task: {this.state.title}</h2>
                             <table>
                                 <tbody>
@@ -101,11 +101,12 @@ export default class EditTask extends React.Component{
                                     <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
                                     <td><input id='toDoDate' name='toDoDate' type='date' defaultValue={this.state.toDoDate} required/></td>
                                 </tr>
-                                <tr>
-                                    <td><button>Update</button></td>
-                                </tr>
                                 </tbody>
                             </table>
+                            <div id='action'>
+                                <button>Update</button>
+                                <div className='buttonStyle'><Link to='/'>Cancel</Link></div>
+                            </div>
                         </form>
                     </div>
                 </div>
