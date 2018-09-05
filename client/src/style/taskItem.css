@@ -58,25 +58,3 @@ div > span {
 .done{
     background: rgb(107, 255, 107);
 }
-
-.show{
-    display: block;
-    
-}
-
-.hidden{
-    display: none;
-}
-
-#progression{
-    width: 30%;
-    display: block;
-    text-align: center;
-    background: #f8f8f8;
-    padding: 5px;
-    border-radius: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    font-style: italic;
-    font-weight: bold;
-}

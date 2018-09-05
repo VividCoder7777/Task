@@ -6,6 +6,7 @@ import * as Loader from 'react-spinners';
 import TaskItem from './taskItem';
 import Calendar from 'react-calendar'
 
+
 export default class Dashboard extends React.Component{
 
     constructor(props){
@@ -161,9 +162,11 @@ export default class Dashboard extends React.Component{
     handleExport(event){
         event.preventDefault();
         let format = event.target.elements.export.value;
-        console.log(format);
-        if (format != ''){
+
+        switch(format){
+            case 'CSV':
             taskAPI.get_export_data(format);
+            break;
         }
     }
 
@@ -181,14 +184,14 @@ export default class Dashboard extends React.Component{
     }
 
     // make it grab only today's task
-    getTasks(date){
+    getTasks(){
       
         let taskItems = [];
         let tasks = this.state.tasks;
 
         for (let i = 0; i < tasks.length; i++){
 
-            if (tasks[i].toDoDate == date){
+            if (tasks[i].toDoDate == this.state.currentDate){
                 taskItems.push(
                     (
                         <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description} isCompleted={tasks[i].isTaskComplete}>
@@ -259,7 +262,7 @@ export default class Dashboard extends React.Component{
 
     render(){
         const displayErrors = this.state.displayErrors;
-        let currentTasks = this.getTasks(this.state.currentDate);
+        let currentTasks = this.getTasks();
 
         return (
         <div>
@@ -290,7 +293,16 @@ export default class Dashboard extends React.Component{
                     <Calendar minDetail='year' onClickDay={this.handleCalenderChange} tileClassName={this.handleCalenderDayClass}/>
                 </div>
                 <div>
-                    <h4>Export</h4>
+                    <h4>Export Tasks</h4>
+                    <div>
+                        <form onSubmit={this.handleExport}>
+                            <select id='export' name='export' defaultValue=''>
+                                <option value=''>Select a format</option>
+                                <option value='CSV'>CSV</option>
+                            </select>
+                            <button>Export</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

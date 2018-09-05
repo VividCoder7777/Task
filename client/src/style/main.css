@@ -235,15 +235,21 @@
     width: 30%;
     display: block;
     text-align: center;
-    background: #f8f8f8;
     padding: 5px;
     border-radius: 25px;
     margin-left: auto;
     margin-right: auto;
     font-style: italic;
     font-weight: bold;
+    border: 3px solid #f8d7b0;
 }
 
 .hasTask{
     background: rgb(235, 231, 30) !important;
+}
+
+#export{
+    display: inline-block;
+    margin-right: 1rem;
+    width: 75%;
 }

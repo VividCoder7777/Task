@@ -92,7 +92,7 @@ exports.task_delete_post = [
 exports.task_format_export = [
     (req, res, next) => {
 
-        let format = req.params.format;
+        let format = req.params.format.toLowerCase();
 
         switch (format){
             case 'csv':

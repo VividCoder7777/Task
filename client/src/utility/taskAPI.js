@@ -80,9 +80,11 @@ class TaskAPI{
                 });
     }
 
+    // probably won't need this, just use current data in browser
     get_export_data(format){
         this.API.post('/tasks/' + format + '/export')
         .then(result => {
+            console.log(result);
             fileDownload(result.data, 'filename.csv');
         })
         .catch(error => {
