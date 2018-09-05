@@ -1,4 +1,4 @@
-input, textarea, select, button {
+input{
     width : 150px;
     margin: 0;
   
@@ -12,7 +12,7 @@ input, textarea, select, button {
   }
 
   #action button{
-      margin-top: 1rem;
+    margin-top: 1rem;
     display: inline-block;
   }
 
@@ -24,7 +24,8 @@ input, textarea, select, button {
     color: white;
 } 
 
-#action button, #action div{
+#action button, #action a{
+    cursor: pointer;
     display: inline-block;
     margin-left: 1rem;
     width: 150px;
@@ -36,4 +37,13 @@ input, textarea, select, button {
     border-radius: 25px;
     color: rgb(238, 238, 238);
     text-align: center;
+}
+
+#action *:hover{
+    opacity: 0.9;
+}
+
+.buttonStyle{
+
+    display: inline-block;
 }
