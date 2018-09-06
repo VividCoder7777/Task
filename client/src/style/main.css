@@ -295,3 +295,26 @@
 #introduction h4:hover{
     text-decoration: underline;
 }
+
+@media only screen and (max-width: 1200px) {
+    #taskInfo {
+        float: none;
+        clear: both;
+        width: 100%;
+    }
+
+    #taskContent{
+        float:none;
+        position: relative;
+        width: 100%;
+        margin-bottom: 5rem !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+   #children button, #children a{
+       font-size: 1rem !important;
+       width: auto !important;
+       padding: 5px !important;
+   }
+}
