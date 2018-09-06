@@ -5,7 +5,7 @@ import Moment from 'moment';
 import * as Loader from 'react-spinners';
 import TaskItem from './taskItem';
 import Calendar from 'react-calendar'
-import headerImage from '../images/headerImage.jpg';
+import headerImage from '../images/work.jpg';
 
 export default class Dashboard extends React.Component{
 
@@ -266,8 +266,7 @@ export default class Dashboard extends React.Component{
 
         return (
         <div>
-            <div id='taskContent'>
-                <div id='introduction'>
+             <div id='introduction'>
                     <div>
                         <h1>Welcome To Task Creator!</h1>
                         <h2>Keep Track of Your Schedule</h2>
@@ -276,6 +275,7 @@ export default class Dashboard extends React.Component{
                         <img src={headerImage}/>
                     </div>
                 </div>
+            <div id='taskContent'>
                 <div id='taskcon'>
                     <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
                         <h3>Create A Task</h3>
