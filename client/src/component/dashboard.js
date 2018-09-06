@@ -26,6 +26,7 @@ export default class Dashboard extends React.Component{
         this.getTaskProgression = this.getTaskProgression.bind(this);
         this.handleCalenderChange = this.handleCalenderChange.bind(this);
         this.handleCalenderDayClass = this.handleCalenderDayClass.bind(this);
+        this.handleNavigation = this.handleNavigation.bind(this);
 
         this.state = {
           tasks: [],
@@ -52,6 +53,17 @@ export default class Dashboard extends React.Component{
             });
         }
 
+    }
+
+    handleNavigation(event){
+        let taskCreate = document.getElementById('taskForm');
+
+        if (taskCreate){
+            taskCreate.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            });
+        }
     }
 
     handleSubmit(event){
@@ -266,15 +278,15 @@ export default class Dashboard extends React.Component{
 
         return (
         <div>
-             <div id='introduction'>
-                    <div>
-                        <h1>Welcome To Task Creator!</h1>
-                        <h2>Keep Track of Your Schedule</h2>
-                        <h3>Export Them On The Go!</h3>
-                        <h4 onClick={this.handleNavigation}>Get Started</h4>
-                        <img src={headerImage}/>
-                    </div>
+            <div id='introduction'>
+                <div>
+                    <h1>Welcome To Task Creator!</h1>
+                    <h2>Keep Track of Your Schedule</h2>
+                    <h3>Export Them On The Go!</h3>
+                    <h4 onClick={this.handleNavigation}>Get Started</h4>
+                    <img src={headerImage}/>
                 </div>
+            </div>
             <div id='taskContent'>
                 <div id='taskcon'>
                     <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
