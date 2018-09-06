@@ -17,7 +17,7 @@
 
 
 #children button, #children a{
-    background: rgb(65, 194, 194);
+    background: rgb(10, 127, 196);
     display: inline-block;
     width: 120px;
     text-align: center;
@@ -28,8 +28,9 @@
     padding: 5px;
     margin-right: 5px;
     color: white;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
 }
 
 #children button:hover{
@@ -56,5 +57,5 @@ div > span {
 }
 
 .done{
-    background: rgb(107, 255, 107);
+    background: rgb(5, 207, 5);
 }
