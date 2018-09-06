@@ -317,4 +317,15 @@
        width: auto !important;
        padding: 5px !important;
    }
+
+   .taskEntry{
+       
+       margin-bottom: 1rem;
+   
+   }
+
+   .taskEntryCompleted{
+        
+        margin-bottom: 1rem;
+   }
 }
