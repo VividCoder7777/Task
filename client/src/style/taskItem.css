@@ -1,8 +1,6 @@
 .taskEntry, .taskEntryCompleted{
     background: #009cb8;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     padding-left: 1rem;
     padding-top: 1rem;
     color: white;
