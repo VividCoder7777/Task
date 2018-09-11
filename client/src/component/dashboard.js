@@ -144,6 +144,7 @@ export default class Dashboard extends React.Component{
     }
 
     handleComplete(event){
+        console.log('CALLING HANDLE COMPLETE');
         event.preventDefault();
         let id = event.target.dataset.id
         let isTaskComplete = !(event.target.dataset.complete === 'true' ? true : false);
@@ -202,14 +203,18 @@ export default class Dashboard extends React.Component{
         let tasks = this.state.tasks;
 
         for (let i = 0; i < tasks.length; i++){
-
             if (tasks[i].toDoDate == this.state.currentDate){
                 taskItems.push(
                     (
-                        <TaskItem key={tasks[i].id} title={tasks[i].title} description={tasks[i].description} isCompleted={tasks[i].isTaskComplete}>
-                            <button data-complete={tasks[i].isTaskComplete} data-id={tasks[i].id} onClick={this.handleComplete}>{tasks[i].isTaskComplete == false ? 'Completed' : 'Undo'}</button>
-                            <button><Link to={'/task/' + tasks[i].id + '/edit'}>Edit</Link></button>
-                            <button data-id={tasks[i].id} onClick={this.handleDelete}>Delete</button>
+                        <TaskItem key={tasks[i].id} 
+                                  title={tasks[i].title} 
+                                  description={tasks[i].description} 
+                                  isCompleted={tasks[i].isTaskComplete}
+                                  handleComplete={this.handleComplete}
+                                  handleDelete={this.handleDelete}
+                                  id={tasks[i].id}
+                                  >
+                                 
                         </TaskItem>
                     )
                 );

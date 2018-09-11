@@ -1,13 +1,20 @@
-.taskEntry{
-    border-bottom: 2px solid rgb(194, 155, 155);
+.taskEntry, .taskEntryCompleted{
+    background: rgb(29, 226, 216, 1);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    color: white;
+    margin-bottom: 1rem;
+    position: relative;
+    line-height: 1.6;
+    border-bottom: rgb(75, 3, 65) 10px solid;
 }
 
-.taskEntryCompleted{
-    border-bottom: 2px solid rgb(194, 155, 155);
-}
 
 .taskEntryCompleted h4, .taskEntryCompleted p{
-    text-decoration: line-through;
+ 
 }
 
 #children{
@@ -17,20 +24,19 @@
 
 
 #children button, #children a{
-    background: rgb(10, 127, 196);
+    background: rgb(107, 12, 94);
     display: inline-block;
-    width: 120px;
+    width: 110px;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.8rem;
     border: none;
     text-decoration: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 10px;
     margin-right: 5px;
+    margin-bottom: 0.5rem;
     color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-
+    border-radius: 15px;
 }
 
 #children button:hover{
@@ -45,17 +51,40 @@
 }
 
 div > span {
-    border-radius: 25px;
-    margin-top: 5px;
-    display: inline-block;
-    padding: 5px;
+    padding: 8px;
     color: white;
 }
 
-.ongoing{
-    background: rgb(243, 217, 72);
+.ongoing, .done{
+    background: rgb(236, 4, 4);
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom-left-radius: 15px;
+    font-weight: bold;
 }
 
 .done{
-    background: rgb(5, 207, 5);
+    background: rgb(16, 117, 58);
+}
+
+.subTitle{
+    font-weight: bold;
+    font-style: italic;
+}
+
+.content{
+    font-size: 1.3rem;
+}
+
+#taskTitle{
+    color: rgb(107, 12, 94);
+    font-size: 2rem;
+    font-family: "Gotham";
+}
+
+#taskDetail{
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
 }

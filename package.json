@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build",
     "dev": "concurrently \"SET PORT=5001 && nodemon ./bin/www\" \"cd client && npm run build\"",
-    "start-dev": "SET PORT=5001 && nodemon ./bin/www"
+    "start-dev": "SET PORT=5001 && nodemon ./bin/www",
+    "test": "cd client && npm run build && cd .. && npm start"
   },
   "dependencies": {
     "concurrently": "^3.6.1",
