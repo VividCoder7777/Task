@@ -1,6 +1,7 @@
 .taskEntry, .taskEntryCompleted{
-    background: #009cb8;
-    width: 100%;
+    background: #01a9c7;
+    margin-left: auto;
+    margin-right: auto;
     padding-left: 1rem;
     padding-top: 1rem;
     color: white;
@@ -9,7 +10,6 @@
     line-height: 1.6;
     border-bottom: rgb(90, 6, 79) 10px solid;
 }
-
 
 .taskEntryCompleted h4, .taskEntryCompleted p{
  
