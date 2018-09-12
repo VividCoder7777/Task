@@ -325,7 +325,6 @@
 @media only screen and (max-width: 700px) {
    #children button, #children a{
        font-size: 1rem !important;
-       width: auto !important;
        padding: 5px !important;
    }
 
