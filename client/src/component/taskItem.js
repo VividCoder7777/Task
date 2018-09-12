@@ -10,7 +10,7 @@ export default class TaskItem extends React.Component{
         let title = this.props.title.toUpperCase();
         let description = this.props.description;
         let taskComplete = this.props.isCompleted;
-        console.log(this.props);
+        
         return (
             <div className={taskComplete == false ? 'taskEntry' : 'taskEntryCompleted'}>
                 <span className={taskComplete == false ? 'ongoing' : 'done'}>{taskComplete == false ? 'Ongoing' : 'Completed'}</span>

@@ -9,7 +9,7 @@
 }
 
 .App{
-    
+    position: relative;
 }
 
 #flexNav > li:nth-child(1) > a{
