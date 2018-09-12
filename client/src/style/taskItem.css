@@ -5,6 +5,7 @@
     position: relative;
     line-height: 1.6;
     margin-right: 5px;
+    height: 300px;
 }
 
 .taskEntryCompleted h4, .taskEntryCompleted p{
