@@ -4,8 +4,8 @@ import './style/main.css';
 import {Switch, Link, Route, Redirect} from 'react-router-dom';
 import Dashboard from './component/dashboard';
 import Edit from './component/edit';
-import Error from './component/error';
-import TaskAPI from './utility/taskAPI';
+import ErrorPage from './component/error';
+
 // The main container
 class App extends Component {
 
@@ -28,7 +28,7 @@ class App extends Component {
           <Switch>
             <Route path='/' exact component={Dashboard}/>
             <Route path='/task/:id/edit' component={Edit}/>
-            <Route component={Error}/>
+            <Route component={ErrorPage}/>
           </Switch>
         </div>
         <footer id='footer'>

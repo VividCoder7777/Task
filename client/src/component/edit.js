@@ -23,7 +23,7 @@ export default class EditTask extends React.Component{
 
     componentDidMount(){
         const id = this.props.match.params.id;
-
+        console.log('COMPONENT DID MOUNT IN EDIT');
         taskAPI.read_task_get(id, this.getTaskCallback);
     }
 
