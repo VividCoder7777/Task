@@ -39,12 +39,10 @@ class TaskAPI{
     }
 
     read_task_get(id, callback){
-        
-        console.log('CALLING READ_TASK_GET EDIT API');
+       
         this.API.get('/task/' + id)
             .then(result =>{
-                console.log('GOT THE RESULT');
-                console.log(result);
+
                 if (result){
                     if (callback != undefined){
                        callback(result.data); 
