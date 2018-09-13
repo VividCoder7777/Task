@@ -18,7 +18,7 @@ export default class TaskItem extends React.Component{
                 <p id='taskDetail' className='content'><span className='subTitle'></span> {description}</p>
                 <div id='children'>
                     <button data-complete={this.props.isCompleted} data-id={this.props.id} onClick={this.props.handleComplete}>{this.props.isCompleted == false ? 'Completed' : 'Undo'}</button>
-                    <button><Link to={'/task/' + this.props.id + '/edit'}>Edit</Link></button>
+                    <Link to={'/task/' + this.props.id + '/edit'}>Edit</Link>
                     <button id='delete' data-id={this.props.id} onClick={this.props.handleDelete}>Delete</button>
                 </div>
             </div>
