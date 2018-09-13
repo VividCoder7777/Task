@@ -1,4 +1,4 @@
-let Task = require('../models').Task;
+let Task = require('../../server/models').Task;
 const Json2csvParser = require('json2csv').Parser;
 
 exports.task_create_post = [

@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let taskController = require('../server/controllers/taskController');
+let taskController = require('./taskController');
 
 // TASK
 router.get('/tasks', taskController.task_get_all);
