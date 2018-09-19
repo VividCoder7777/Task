@@ -20,10 +20,6 @@ input{
     text-decoration: none;
   }
 
-  a:visited{
-    color: white;
-} 
-
 #action button, #action a{
     cursor: pointer;
     display: inline-block;
