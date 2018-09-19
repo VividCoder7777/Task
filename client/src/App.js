@@ -22,6 +22,7 @@ class App extends Component {
             <li><Link to='/'>Get more done with Task Creator</Link></li>
             <li>About</li>
             <li>Get Started</li>
+            <li id='login'><a href='http://localhost:5001/auth/google'>Sign In</a></li>
           </ul>
         </nav>
         <div id='content'>

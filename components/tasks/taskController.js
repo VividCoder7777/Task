@@ -3,6 +3,8 @@ const Json2csvParser = require('json2csv').Parser;
 
 exports.task_create_post = [
     (req, res, next)=>{
+        console.log(req.body);
+
         let task = new Task({
             title: req.body.title,
             description: req.body.description,
@@ -32,6 +34,11 @@ exports.task_get_one = [
 
 exports.task_get_all = [
     (req, res, next) => {
+        console.log('HELLO');
+        console.log('LOOK AT THE COOKIES');
+        console.log(req.cookies);
+        console.log('LOOK AT THE USER');
+        console.log(req.user);
         Task.findAll()
             .then(result => {
                 res.send(result);

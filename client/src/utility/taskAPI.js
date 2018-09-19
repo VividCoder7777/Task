@@ -3,19 +3,22 @@ var fileDownload = require('react-file-download');
 
 class TaskAPI{
 
-    // https://tasklist7777.herokuapp.com/api
     constructor(){
-        let env = process.env.NODE_ENV;
+        // let env = process.env.NODE_ENV;
 
-        if (env === 'production'){
-            this.API = axios.create({
-                baseURL: process.env.REACT_APP_PROD_PROXY
-            });
-        } else if (env === 'development'){
-            this.API = axios.create({
-                baseURL: process.env.REACT_APP_DEV_PROXY
-            });
-        }
+        // if (env === 'production'){
+        //     this.API = axios.create({
+        //         baseURL: process.env.REACT_APP_PROD_PROXY
+        //     });
+        // } else if (env === 'development'){
+        //     this.API = axios.create({
+        //         baseURL: process.env.REACT_APP_DEV_PROXY
+        //     });
+        // }
+        this.API = axios.create({
+            baseURL: process.env.REACT_APP_DEV_PROXY
+        });
+        
     }
 
     create_task_post(body, callback){
@@ -54,7 +57,6 @@ class TaskAPI{
                 }
             })
             .catch(error =>{
-                console.log('ERROR');
                 callback(false);
             });
     }
@@ -87,7 +89,6 @@ class TaskAPI{
     get_export_data(format){
         this.API.post('/tasks/' + format + '/export')
         .then(result => {
-            console.log(result);
             fileDownload(result.data, 'filename.csv');
         })
         .catch(error => {

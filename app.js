@@ -3,18 +3,34 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+
 let cors = require('cors');
 require('dotenv').config();
 
-let taskRouter = require('./components/tasks/taskRouter');
 
 var app = express();
+
+app.use(cors());
+
+let taskRouter = require('./components/tasks/taskRouter');
+let authRouter = require('./components/authentication/auth_router');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors());
+app.use(cookieSession({
+  name: 'session',
+  maxAge: 24*60*60*1000,
+  keys: [process.env.session_key] 
+}));
+
+// 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +38,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/api', taskRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
