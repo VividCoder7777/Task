@@ -1,26 +1,34 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-
 let cors = require('cors');
 require('dotenv').config();
 
-
 var app = express();
 
-app.use(cors());
+// app.use(cors());
 
-let taskRouter = require('./components/tasks/taskRouter');
+const corsOptions = {
+  origin: 'http://localhost:5000',
+  credentials: true
+};
+
 let authRouter = require('./components/authentication/auth_router');
+let taskRouter = require('./components/tasks/taskRouter');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// app.use(session({
+//   name: 'task',
+//   cookie: {maxAge: 24*60*60*1000},
+//   secret: [process.env.session_key]
+// }));
+ 
 app.use(cookieSession({
   name: 'session',
   maxAge: 24*60*60*1000,
@@ -37,12 +45,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.use('/api', taskRouter);
 app.use('/auth', authRouter);
-
+app.use('/api', cors(corsOptions), 
+taskRouter);
 
 app.get('*', (req, res, next) => {
-  console.log('REFRESH!?');
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 

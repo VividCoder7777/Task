@@ -1,0 +1,44 @@
+
+#introduction{
+    z-index: 100;
+    padding: 3rem;
+    background: rgb(177, 0, 0);
+    margin-bottom: 4rem;
+    border-radius: 3px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    line-height: 1.6;
+    position: relative;
+}
+
+#introduciton div{
+    margin: auto;
+}
+
+#introduction img{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.35;
+
+}
+
+#introduction h4{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#introduction a{
+    color: rgb(179, 1, 1); 
+}
+
+#introduction h4:hover{
+    text-decoration: underline;
+}

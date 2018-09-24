@@ -1,0 +1,27 @@
+#google{
+    background: rgb(223, 90, 90);
+    color: white;
+    width: 400px;
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+}
+
+#google:hover{
+    opacity: .9;
+}
+
+#loginContainer{
+    text-align: center;
+    width: 450px;
+    margin: auto;
+    height: 600px;
+    margin-top: 3rem;
+    border: 0.2rem solid #f8d7b0;
+    background: #f8f8f8;
+}
+
+#loginContainer h3{
+    margin-bottom: 3rem;
+}
+

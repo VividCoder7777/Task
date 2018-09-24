@@ -1,5 +1,5 @@
 .taskEntry, .taskEntryCompleted{
-    background: #01a9c7;
+    background: rgb(20, 168, 168);
     color: white;
     margin-bottom: 1rem;
     position: relative;
@@ -79,8 +79,8 @@ div > span {
 }
 
 #taskTitle{
-    color: rgb(138, 1, 119);
-    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    font-size: 2.5rem;
     font-family: "Gotham";
     text-align: center;
     margin-bottom: 10px;
@@ -99,4 +99,5 @@ div > span {
 
 #taskContainer{
     display: grid;
+    margin-top: 1rem;
 }

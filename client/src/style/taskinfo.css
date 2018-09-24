@@ -1,0 +1,57 @@
+#taskgrid{
+    display: grid;
+    grid-template-columns:200px 200px 200px 850px;
+    grid-template-rows: auto;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+}
+
+#taskgrid div{
+    color: white;
+    text-align: center;
+}
+
+.taskdisplay{
+    display: inline-block;
+    padding-top: 30px;
+    font-size: 5rem;
+}
+
+
+#taskgrid > div:nth-child(1){
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background: rgb(233, 12, 148);
+}
+
+#taskgrid > div:nth-child(2){
+    background: rgb(238, 54, 30);
+}
+
+
+#taskgrid > div:nth-child(3){
+    background: rgb(20, 168, 168);
+}
+
+
+#taskgrid > div:nth-child(4){
+    background: rgb(243, 20, 176);
+}
+
+#taskgrid > div:hover{
+    opacity: 0.8;
+}
+
+#taskCompleted{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 4;
+    background: rgb(221, 16, 129);
+}
+
+#createTask{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 4;
+    background: red !important;
+}

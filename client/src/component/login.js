@@ -1,15 +1,15 @@
 import React from 'react';
+import '../style/login.css';
 
 export default class Login extends React.Component {
 
-
     render(){
         return (
-            <div>
-                Cookies are:
-                {document.cookie}
+            <div id='loginContainer'>
                 <h3>Sign In</h3>
-                <a href='http://localhost:5001/auth/google'>Google+</a>
+                <div>
+                    <a id='google' href='http://localhost:5001/auth/google'>Google+</a>
+                </div>
             </div>
         );
     }

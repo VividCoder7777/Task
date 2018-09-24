@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link, Router} from 'react-router-dom';
 import taskAPI from '../utility/taskAPI';
 import Moment from 'moment';
 import * as Loader from 'react-spinners';
 import TaskItem from './taskItem';
 import Calendar from 'react-calendar'
 import headerImage from '../images/work.jpg';
+import TaskSummary from './taskInfo';
 
 export default class Dashboard extends React.Component{
 
@@ -23,7 +23,6 @@ export default class Dashboard extends React.Component{
         this.handleExport = this.handleExport.bind(this);
         this.getTasks = this.getTasks.bind(this);
         this.showLoading = this.showLoading.bind(this);
-        this.getTaskProgression = this.getTaskProgression.bind(this);
         this.handleCalenderChange = this.handleCalenderChange.bind(this);
         this.handleCalenderDayClass = this.handleCalenderDayClass.bind(this);
         this.handleNavigation = this.handleNavigation.bind(this);
@@ -31,20 +30,29 @@ export default class Dashboard extends React.Component{
         this.state = {
           tasks: [],
           finishedLoading: false,
-          currentDate: Moment(new Date()).format('YYYY-MM-DD')
+          currentDate: Moment(new Date()).format('YYYY-MM-DD'),
+          username: ''
         };
       }
     
     componentDidMount(){
-        taskAPI.read_all_task_get(this.updateTasksCallback);
+        this.getAllTask();
     }
     // 
     updateTasksCallback(result){
-
+        
+        console.log(result);
         if (result){
+
+            let username = '';
+            if (result[0]){
+                username = result[0].User.username;
+            }
+
             this.setState({
                 tasks: result,
-                finishedLoading: true
+                finishedLoading: true,
+                username: username
              });
         } else {
             this.setState({
@@ -144,10 +152,9 @@ export default class Dashboard extends React.Component{
     }
 
     handleComplete(event){
-        console.log('CALLING HANDLE COMPLETE');
         event.preventDefault();
         let id = event.target.dataset.id
-        let isTaskComplete = !(event.target.dataset.complete === 'true' ? true : false);
+        let isTaskComplete = !(event.target.dataset.complete === 'true');
         
         let body = {
             isTaskComplete : isTaskComplete,
@@ -230,22 +237,6 @@ export default class Dashboard extends React.Component{
         }
     }
 
-    getTaskProgression(date){
-        
-        let tasks = this.state.tasks;
-        let progression = 0;
-
-        for (let i = 0; i < tasks.length; i++){
-            if (tasks[i].toDoDate === date){
-                if (tasks[i].isTaskComplete){
-                    progression++;
-                } 
-            }
-        }
-
-        return progression;
-    }
-
     handleCalenderChange(date){
         let formattedDate = Moment(date).format('YYYY-MM-DD');
      
@@ -280,18 +271,11 @@ export default class Dashboard extends React.Component{
     render(){
         const displayErrors = this.state.displayErrors;
         let currentTasks = this.getTasks();
-
+      
         return (
+        
         <div>
-            <div id='introduction'>
-                <div>
-                    <h1>Welcome To Task Creator!</h1>
-                    <h2>Keep Track of Your Schedule</h2>
-                    <h3>Export Them On The Go!</h3>
-                    <h4 onClick={this.handleNavigation}>Get Started</h4>
-                    <img src={headerImage}/>
-                </div>
-            </div>
+             <TaskSummary tasks = {this.state.tasks} name={this.state.username}/>
             <div id='taskContent'>
                 <div id='taskcon'>
                     <form id='taskForm' className={displayErrors ? 'displayErrors' : ''} onSubmit={this.handleSubmit} noValidate>
@@ -337,9 +321,6 @@ export default class Dashboard extends React.Component{
                     <h3>
                         Today's Tasks: <span id='currentDate'>{this.state.currentDate}</span>
                     </h3>
-                    <div className={currentTasks.length ? 'show' : 'hidden'}>
-                        <p id='progression'>{this.getTaskProgression(this.state.currentDate)}/{currentTasks.length} Task Completed</p>
-                    </div>
                     <div id='taskContainer'>
                         {this.state.finishedLoading === true ? 
                                                                 (this.state.errorMessage ? this.state.errorMessage : currentTasks) 

@@ -6,18 +6,39 @@ import Dashboard from './component/dashboard';
 import Edit from './component/edit';
 import ErrorPage from './component/error';
 import Login from './component/login';
+import Home from './component/home/home';
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
+}
 
 // The main container
 class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {isLoggedIn: false};
   }
 
-  componentDidMount(){
-    let isLoggedIn = document.cookie;
-    console.log(isLoggedIn);
+  isAuthenticated(){
+    let auth = getCookie('login');
+
+    if (auth){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   render() {
@@ -29,15 +50,20 @@ class App extends Component {
             <li><Link to='/'>Get more done with Task Creator</Link></li>
             <li>About</li>
             <li>Get Started</li>
-            <li id='login'><Link to='/login'>Sign In</Link></li>
+            <li><Link to='/dashboard'>Dashboard</Link></li>
+            {this.isAuthenticated() ? (<li id='login'><a href='http://localhost:5001/auth/logout'>Sign Out</a></li>) : 
+                                      (<li id='login'><Link to='/login'>Sign In</Link></li>)}
+            
           </ul>
         </nav>
         <div id='content'>
+       
           <Switch>
-            <Route path='/' exact render={(props) => {
-              if (this.isLoggedIn){
+            <Route path='/' exact component={Home}/>
+            <Route path='/dashboard'  render={(props)=>{
+              if (this.isAuthenticated()){
                 return <Dashboard {...props}/>
-              } else {
+              } else {     
                 return <Redirect to='/login'/>
               }
             }}/>

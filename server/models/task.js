@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   task.associate = function(models) {
-    // associations can be defined here
+      task.belongsTo(models.User, {
+        foreignKey: 'user',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
   };
   return task;
 };

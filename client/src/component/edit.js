@@ -46,7 +46,7 @@ export default class EditTask extends React.Component{
     }
 
     updateTaskCallback(result){
-        window.location.href = '/';
+        window.location.href = '/dashboard';
     }
 
     handleSubmit(event){
@@ -95,7 +95,7 @@ export default class EditTask extends React.Component{
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='description'>Description:</label></td>
-                                    <td><input id='description' name='description' type='text' defaultValue={this.state.description} required autocomplete="off"/></td>
+                                    <td><input id='description' name='description' type='text' defaultValue={this.state.description} autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='toDoDate'>Scheduled At:</label></td>
@@ -105,7 +105,7 @@ export default class EditTask extends React.Component{
                             </table>
                             <div id='action'>
                                 <button>Update</button>
-                                <div className='buttonStyle'><Link to='/'>Cancel</Link></div>
+                                <div className='buttonStyle'><Link to='/dashboard'>Cancel</Link></div>
                             </div>
                         </form>
                     </div>

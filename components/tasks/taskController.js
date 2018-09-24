@@ -1,14 +1,14 @@
 let Task = require('../../server/models').Task;
 const Json2csvParser = require('json2csv').Parser;
 
+
 exports.task_create_post = [
     (req, res, next)=>{
-        console.log(req.body);
-
         let task = new Task({
             title: req.body.title,
             description: req.body.description,
-            toDoDate: req.body.toDoDate
+            toDoDate: req.body.toDoDate,
+            user: req.user.id
         });
 
         task.save(task)
@@ -34,12 +34,12 @@ exports.task_get_one = [
 
 exports.task_get_all = [
     (req, res, next) => {
-        console.log('HELLO');
-        console.log('LOOK AT THE COOKIES');
-        console.log(req.cookies);
-        console.log('LOOK AT THE USER');
-        console.log(req.user);
-        Task.findAll()
+        Task.findAll({
+            include: ['User'],
+            where: {
+                user: req.user.id,
+            },
+        })
             .then(result => {
                 res.send(result);
             }).catch(error => {
@@ -50,7 +50,6 @@ exports.task_get_all = [
 
 exports.task_update_post = [
     (req, res, next) => {
-        console.log('hey hey');
 
         // check if it exist
         Task.findById(req.params.id)
