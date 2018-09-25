@@ -30,15 +30,16 @@
 
 }
 
-#introduction h4{
+
+#introduction a{
+    color: rgb(255, 16, 16); 
+    display: inline-block;
+    width: 150px;
+    background: rgb(251, 255, 14);
     font-weight: bold;
     cursor: pointer;
 }
 
-#introduction a{
-    color: rgb(179, 1, 1); 
-}
-
-#introduction h4:hover{
-    text-decoration: underline;
+#introduction a:hover{
+   opacity: 0.9;
 }

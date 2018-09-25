@@ -7,6 +7,7 @@ import Edit from './component/edit';
 import ErrorPage from './component/error';
 import Login from './component/login';
 import Home from './component/home/home';
+import Env from './utility/envVariables';
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -51,7 +52,7 @@ class App extends Component {
             <li>About</li>
             <li>Get Started</li>
             <li><Link to='/dashboard'>Dashboard</Link></li>
-            {this.isAuthenticated() ? (<li id='login'><a href='http://localhost:5001/auth/logout'>Sign Out</a></li>) : 
+            {this.isAuthenticated() ? (<li id='login'><a href= {Env.SERVER + 'auth/logout'}>Sign Out</a></li>) : 
                                       (<li id='login'><Link to='/login'>Sign In</Link></li>)}
             
           </ul>

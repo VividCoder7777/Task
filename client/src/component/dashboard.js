@@ -40,8 +40,7 @@ export default class Dashboard extends React.Component{
     }
     // 
     updateTasksCallback(result){
-        
-        console.log(result);
+
         if (result){
 
             let username = '';

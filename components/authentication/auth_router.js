@@ -11,7 +11,7 @@ router.get('/logout', (req, res, next) => {
     console.log(req.user);
     res.clearCookie('login');
     req.logout();
-    res.redirect('http://localhost:5000/');
+    res.redirect('/');
 });
 
 router.get('/google', passport.authenticate('google', {
@@ -26,7 +26,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res, next)
     } else {
         res.clearCookie('login');
     }
-    res.redirect('http://localhost:5000/dashboard');
+    res.redirect('/dashboard');
 })
 
 module.exports = router;

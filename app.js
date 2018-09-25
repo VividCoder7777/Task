@@ -12,7 +12,7 @@ var app = express();
 // app.use(cors());
 
 const corsOptions = {
-  origin: 'http://localhost:5000',
+  origin: 'http://localhost:5001',
   credentials: true
 };
 
@@ -22,12 +22,6 @@ let taskRouter = require('./components/tasks/taskRouter');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-// app.use(session({
-//   name: 'task',
-//   cookie: {maxAge: 24*60*60*1000},
-//   secret: [process.env.session_key]
-// }));
  
 app.use(cookieSession({
   name: 'session',
@@ -46,8 +40,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/auth', authRouter);
-app.use('/api', cors(corsOptions), 
-taskRouter);
+app.use('/api', cors(corsOptions), taskRouter);
 
 app.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));

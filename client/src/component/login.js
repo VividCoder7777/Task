@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/login.css';
+import Env from '../utility/envVariables';
 
 export default class Login extends React.Component {
 
@@ -8,7 +9,7 @@ export default class Login extends React.Component {
             <div id='loginContainer'>
                 <h3>Sign In</h3>
                 <div>
-                    <a id='google' href='http://localhost:5001/auth/google'>Google+</a>
+                    <a id='google' href={Env.SERVER + 'auth/google'}>Google+</a>
                 </div>
             </div>
         );

@@ -1,25 +1,16 @@
 import axios from 'axios';
-var fileDownload = require('react-file-download');
+import Env from './envVariables';
+const fileDownload = require('react-file-download');
+
 
 class TaskAPI{
 
     constructor(){
-        let env = process.env.NODE_ENV;
 
-        if (env === 'production'){
-            this.API = axios.create({
-                baseURL: process.env.REACT_APP_PROD_PROXY
-            });
-        } else if (env === 'development'){
-            this.API = axios.create({
-                baseURL: process.env.REACT_APP_DEV_PROXY,
-                withCredentials: true
-            });
-        }
-        // this.API = axios.create({
-        //     baseURL: process.env.REACT_APP_DEV_PROXY,
-        //     withCredentials: true
-        // });        
+        this.API = axios.create({
+            baseURL: Env.PROXY,
+            withCredentials: true
+        });
     }
 
     create_task_post(body, callback){
@@ -38,8 +29,6 @@ class TaskAPI{
                 callback(result.data);
             })
             .catch(error => {
-                console.log('error is');
-                console.log(error);
                 callback(false);
             });
     }
